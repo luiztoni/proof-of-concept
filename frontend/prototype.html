@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Prototype</title>
+</head>
+<body>
+    <input type="text" id="name">
+    <input type="number" id="size">
+    <div id="info"></div>
+    <button onclick="show()">Show</button>
+</body>
+<script>
+    function show() {
+        let name = document.getElementById("name").value;
+        let size = document.getElementById("size").value;
+        Fruit(name, size).getInfo();
+    }
+
+    var Fruit = (name, size) => {
+        var f = {};
+        f.name = name;
+        f.size = size;
+        f.getInfo = () => {
+            console.log(`${f.name} ${f.size}`);
+            document.getElementById("info").innerHTML = "name: "+this.name+";size:"+this.size
+        }
+        return f;
+    }
+       
+</script>
+</html>
