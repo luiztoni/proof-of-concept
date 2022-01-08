@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>From dynamic</title>
+</head>
+<body>
+    <button id="btnHide">Hide</button>
+    <div id="text">
+        <p id="subtext" style>JS Event Lister</p>
+    </div>
+    <form>
+        <input type="name" placeholder="What is your name?" onkeypress="hello(this)">
+    </form>
+    <div id="info"></div>
+    <form enctype="multipart/form-data" action="" method="post">
+        <p>Upload file(s)</p>
+        <div id="files">
+            <p><input type="file" name="uploaded_file[]" /></p>
+        </div>
+        <p><input type="button" value="Add File" onclick="addFile()" /></p>
+    </form>
+</body>
+    
+<script> 
+        var fileId = 0;
+        function addFile() {
+            fileId++;
+            var html = 
+            `<input type="file" name="uploaded_files[]" /><a onclick= "javascript:removeElement('file-${fileId}'); return false;">Remove</a>`;
+            addElement('files', 'p', 'file-' + fileId, html);
+        }   
+        function addElement(parentId, elementTag, elementId, html) {
+            var p = document.getElementById(parentId);
+            var newElement = document.createElement(elementTag);
+            newElement.setAttribute('id', elementId);
+            newElement.innerHTML = html;
+            p.appendChild(newElement);
+        }
+    
+        function removeElement(elementId) {
+            var element = document.getElementById(elementId);
+            element.parentNode.removeChild(element);
+        }
+
+        var btn = document.getElementById("btnHide");
+        btn.addEventListener('click', function() {
+           document.getElementById("text").hidden = !document.getElementById("text").hidden;
+        });
+        function hello(content) {
+           document.getElementById("info").innerHTML = "Hello "+ content.value;
+        }
+    </script>
+</html>

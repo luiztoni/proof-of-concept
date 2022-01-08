@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CEP XHR</title>
+</head>
+<body>
+    <form>
+        <input type="text" name="cep">
+        <input type="text" name="city">
+    </form>
+    <script>
+        let city = document.querySelector('[name="city"]');
+        let cep = document.querySelector('[name="cep"]');
+        cep.addEventListener("blur", () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', "https://viacep.com.br/ws/"+cep.value+"/json");
+            xhr.responseType = 'json';
+            xhr.send();
+            xhr.onload = function() {
+                if (xhr.status != 200) { 
+                    console.log(`Error ${xhr.status}: ${xhr.statusText}`); 
+                } else { 
+                    console.log(`Done, got ${xhr.response.length} bytes`); 
+                    console.table(xhr.response);
+                    city.value = xhr.response.localidade;
+                }
+            };
+            xhr.onprogress = function(event) {
+                if (event.lengthComputable) {
+                    console.log(`Received ${event.loaded} of ${event.total} bytes`);
+                } else {
+                    console.log(`Received ${event.loaded} bytes`); 
+                }
+            };
+            xhr.onerror = function() {
+                console.error("Request failed");
+            };
+        });
+    </script>
+</body>
+</html>
